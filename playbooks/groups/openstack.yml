@@ -1,0 +1,7 @@
+- name: openstack
+  hosts: openstack
+  roles:
+    - base
+    - fix_ovh
+    - openvpn
+    - openstack

@@ -1,0 +1,44 @@
+---
+# glance
+
+- mysql_db: name=glance state=present
+
+- mysql_user: name=glance password={{ glance_dbpass }} host={{ item }}
+    priv=glance.*:ALL state=present
+  with_items:
+  - localhost
+  - "{{ openstack_nodes[inventory_hostname].node_name }}"
+
+- template: >
+    src=glance/glance-api.conf.j2
+    dest=/etc/glance/glance-api.conf
+  notify: Restart glance-api
+
+- template: >
+    src=glance/glance-registry.conf.j2
+    dest=/etc/glance/glance-registry.conf
+  notify: Restart glance-registry
+
+- keystone_user: user=glance tenant=service
+    password={{ glance_pass }}
+    token={{ admin_token }}
+
+- keystone_user: role=admin user=glance tenant=service
+    token={{ admin_token }}
+
+- keystone_service: name=glance type=image description="Image Service"
+    public_url="http://controller:9292"
+    internal_url="http://controller:9292"
+    admin_url="http://controller:9292"
+    region={{ openstack_region }}
+    token={{ admin_token }}
+
+- seboolean: name=glance_api_can_network state=yes persistent=yes
+
+- command: glance-manage db_sync
+  become: yes
+  become_user: glance
+  changed_when: False
+
+- service: name=openstack-glance-api state=started enabled=yes
+- service: name=openstack-glance-registry state=started enabled=yes

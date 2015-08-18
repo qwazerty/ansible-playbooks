@@ -1,0 +1,9 @@
+---
+- include: package.yml
+  tags: package
+- include: root.yml
+  tags: configuration
+- include: hosts.yml
+  tags: configuration
+- include: sshd.yml
+  tags: configuration

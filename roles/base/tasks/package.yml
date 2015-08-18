@@ -1,0 +1,12 @@
+---
+- name: Install debian packages
+  package: name={{item}} state=latest
+  with_items:
+      - "{{ debian_packages }}"
+  when: ansible_os_family == "Debian"
+
+- name: Install redhat packages
+  package: name={{item}} state=latest
+  with_items:
+      - "{{ redhat_packages }}"
+  when: ansible_os_family == "RedHat"

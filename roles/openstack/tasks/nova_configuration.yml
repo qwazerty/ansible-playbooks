@@ -1,0 +1,14 @@
+---
+# nova compute node
+
+- template: >
+    src=compute/nova.conf.j2
+    dest=/etc/nova/nova.conf
+  notify: Restart nova
+
+#- seboolean: name=glance_api_can_network state=yes persistent=yes
+
+- service: name={{ item }} state=started enabled=yes
+  with_items:
+  - libvirtd
+  - openstack-nova-compute

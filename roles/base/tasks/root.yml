@@ -1,0 +1,18 @@
+---
+- name: "zshrc for root"
+  copy: src=zshrc dest=/root/.zshrc owner=root group=root mode=0600
+
+- name: "zsh folder for root"
+  copy: src=zsh/ dest=/root/.zsh/ owner=root group=root mode=0700
+
+- name: "vimrc for root"
+  copy: src=vimrc dest=/root/.vimrc owner=root group=root mode=0600
+
+- name: "set shell to zsh for root"
+  user: name=root shell=/usr/bin/zsh
+
+- name: "ssh folder for root"
+  file: path=/root/.ssh/ owner=root group=root mode=0700
+
+- name: "ssh keys for root"
+  copy: src=authorized_keys dest=/root/.ssh/authorized_keys owner=root group=root mode=0600

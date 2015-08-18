@@ -1,0 +1,9 @@
+DEVICE=br-ex
+TYPE='OVSBridge'
+IPV6INIT=no
+IPV6_AUTOCONF=no
+OVSBOOTPROTO=static
+GATEWAY={{ ansible_default_ipv4.gateway }}
+IPADDR={{ ansible_default_ipv4.address }}
+HWADDR={{ ansible_default_ipv4.macaddress }}
+NETMASK={{ ansible_default_ipv4.netmask }}

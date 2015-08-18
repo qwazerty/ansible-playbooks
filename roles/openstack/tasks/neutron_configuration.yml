@@ -1,0 +1,71 @@
+---
+- sysctl: name={{ item.key }} value={{ item.value }} sysctl_set=yes
+    state=present reload=yes
+  with_items:
+  - { key: net.ipv4.ip_forward, value: 1 }
+  - { key: net.ipv4.conf.all.rp_filter, value: 0 }
+  - { key: net.ipv4.conf.default.rp_filter, value: 0 }
+
+# Configuration neutron
+
+- template: >
+    src=neutron/neutron.conf.j2
+    dest=/etc/neutron/neutron.conf
+  notify: Restart neutron
+
+- template: >
+    src=neutron/ml2_conf.ini.j2
+    dest=/etc/neutron/plugins/ml2/ml2_conf.ini
+  notify: Restart neutron
+
+- template: >
+    src=neutron/l3_agent.ini.j2
+    dest=/etc/neutron/l3_agent.ini
+  notify: Restart neutron
+
+- template: >
+    src=neutron/dhcp_agent.ini.j2
+    dest=/etc/neutron/dhcp_agent.ini
+  notify: Restart neutron
+
+- template: >
+    src=neutron/metadata_agent.ini.j2
+    dest=/etc/neutron/metadata_agent.ini
+  notify: Restart neutron
+
+- file: src=/etc/neutron/plugins/ml2/ml2_conf.ini
+    dest=/etc/neutron/plugin.ini state=link
+
+- copy: src=neutron/neutron-openvswitch-agent.service
+    dest=/etc/systemd/system/neutron-openvswitch-agent.service
+
+# Setup bridge
+
+- service: name=openvswitch state=started enabled=yes
+- service: name=NetworkManager enabled=no
+
+- template: src=neutron/openvswitch.sh.j2
+    dest=/usr/local/bin/openvswitch.sh
+    owner=root group=root mode=0755
+
+- command: /usr/local/bin/openvswitch.sh
+  when: ansible_br_ex is undefined
+
+- name: set network-script for eth0
+  template: >
+    src=neutron/ifcfg-eth0.j2
+    dest=/etc/sysconfig/network-scripts/ifcfg-eth0
+
+- name: set network-script for br-ex
+  template: >
+    src=neutron/ifcfg-br-ex.j2
+    dest=/etc/sysconfig/network-scripts/ifcfg-br-ex
+
+- service: name={{ item }} state=started enabled=yes
+  with_items:
+  - neutron-openvswitch-agent
+  - neutron-l3-agent
+  - neutron-dhcp-agent
+  - neutron-metadata-agent
+
+- service: name=neutron-ovs-cleanup enabled=yes

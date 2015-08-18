@@ -1,0 +1,5 @@
+- name: Restart glance-api
+  service: name=openstack-glance-api state=restarted
+
+- name: Restart glance-registry
+  service: name=openstack-glance-registry state=restarted

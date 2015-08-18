@@ -1,0 +1,10 @@
+---
+- name: ssh rootlogin without-password
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin"
+    line="PermitRootLogin without-password" state=present
+  notify: Restart sshd
+
+- name: ssh setup password authentication
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication"
+    line="PasswordAuthentication {{ ssh_passwordauth }}" state=present
+  notify: Restart sshd

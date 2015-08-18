@@ -1,0 +1,45 @@
+---
+# nova
+
+- mysql_db: name=nova state=present
+
+- mysql_user: name=nova password={{ nova_dbpass }} host={{ item }}
+    priv=nova.*:ALL state=present
+  with_items:
+  - localhost
+  - "{{ openstack_nodes[inventory_hostname].node_name }}"
+
+- keystone_user: user=nova tenant=service
+    password={{ nova_pass }}
+    token={{ admin_token }}
+
+- keystone_user: role=admin user=nova tenant=service
+    token={{ admin_token }}
+
+- keystone_service: name=nova type=compute description="Compute Service"
+    public_url="http://controller:8774/v2/%(tenant_id)s"
+    internal_url="http://controller:8774/v2/%(tenant_id)s"
+    admin_url="http://controller:8774/v2/%(tenant_id)s"
+    region={{ openstack_region }}
+    token={{ admin_token }}
+
+- template: >
+    src=controller/nova.conf.j2
+    dest=/etc/nova/nova.conf
+  notify: Restart nova
+
+#- seboolean: name=glance_api_can_network state=yes persistent=yes
+
+- command: nova-manage db sync
+  become: yes
+  become_user: nova
+  changed_when: False
+
+- service: name={{ item }} state=started enabled=yes
+  with_items:
+  - openstack-nova-api
+  - openstack-nova-cert
+  - openstack-nova-consoleauth
+  - openstack-nova-scheduler
+  - openstack-nova-conductor
+  - openstack-nova-novncproxy

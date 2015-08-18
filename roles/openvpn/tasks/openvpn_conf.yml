@@ -1,0 +1,19 @@
+---
+- template: src=server.conf.j2 dest=/etc/openvpn/server.conf
+  when: inventory_hostname == "{{ openvpn_server }}"
+
+- file: dest=/etc/openvpn/ccd state=directory
+  when: inventory_hostname == "{{ openvpn_server }}"
+
+- template: src=ccd.j2 dest=/etc/openvpn/ccd/{{ item.key }}
+  with_dict: openvpn_clients
+  when: inventory_hostname == "{{ openvpn_server }}"
+
+- template: src=client.conf.j2 dest=/etc/openvpn/client.conf
+  when: inventory_hostname != "{{ openvpn_server }}"
+
+- service: name=openvpn@server state=started enabled=yes
+  when: inventory_hostname == "{{ openvpn_server }}"
+
+- service: name=openvpn@client state=started enabled=yes
+  when: inventory_hostname != "{{ openvpn_server }}"

@@ -1,0 +1,9 @@
+---
+- lineinfile: dest=/etc/sysconfig/network-scripts/route6-eth0
+    regexp='(?i)2001:41d0:d:cff:ff:ff:ff:ff' state=absent
+  notify: Restart network
+  register: fix_ipv6
+
+- name: Restart network
+  service: name=network state=restarted
+  when: fix_ipv6.changed

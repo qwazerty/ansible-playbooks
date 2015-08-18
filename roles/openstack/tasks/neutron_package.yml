@@ -1,0 +1,6 @@
+---
+- package: name={{ item }} state=present
+  with_items:
+  - openstack-neutron
+  - openstack-neutron-ml2
+  - openstack-neutron-openvswitch

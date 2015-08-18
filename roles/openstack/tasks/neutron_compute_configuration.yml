@@ -1,0 +1,30 @@
+---
+- modprobe: name=br_netfilter state=present
+
+- sysctl: name={{ item.key }} value={{ item.value }} sysctl_set=yes
+    state=present reload=yes
+  with_items:
+  - { key: net.ipv4.conf.all.rp_filter, value: 0 }
+  - { key: net.ipv4.conf.default.rp_filter, value: 0 }
+  - { key: net.bridge.bridge-nf-call-iptables, value: 1 }
+  - { key: net.bridge.bridge-nf-call-ip6tables, value: 1 }
+
+- template: >
+    src=compute/neutron.conf.j2
+    dest=/etc/neutron/neutron.conf
+  notify: Restart neutron
+
+- template: >
+    src=compute/ml2_conf.ini.j2
+    dest=/etc/neutron/plugins/ml2/ml2_conf.ini
+  notify: Restart neutron
+
+- service: name=openvswitch state=started enabled=yes
+
+- file: src=/etc/neutron/plugins/ml2/ml2_conf.ini
+    dest=/etc/neutron/plugin.ini state=link
+
+- copy: src=neutron/neutron-openvswitch-agent.service
+    dest=/etc/systemd/system/neutron-openvswitch-agent.service
+
+- service: name=neutron-openvswitch-agent state=started enabled=yes

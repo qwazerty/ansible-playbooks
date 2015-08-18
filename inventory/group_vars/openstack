@@ -1,0 +1,55 @@
+openstack_region: RegionOne
+openstack_verbose: True
+openstack_debug: False
+
+openvpn_server: reno.qwazerty.eu
+openvpn_clients:
+  rude.qwazerty.eu:
+    openvpn_ip: 10.0.0.11
+    openvpn_remote: 10.0.0.12
+  elena.qwazerty.eu:
+    openvpn_ip: 10.0.0.21
+    openvpn_remote: 10.0.0.22
+  tseng.qwazerty.eu:
+    openvpn_ip: 10.0.0.23
+    openvpn_remote: 10.0.0.24
+  home.qwazerty.eu:
+    openvpn_ip: 10.0.0.25
+    openvpn_remote: 10.0.0.26
+
+openstack_nodes:
+  reno.qwazerty.eu:
+    node_type: network
+    node_name: network
+    private_ip: 10.0.0.1
+  rude.qwazerty.eu:
+    node_type: controller
+    node_name: controller
+    private_ip: 10.0.0.11
+  elena.qwazerty.eu:
+    node_type: compute
+    node_name: compute1
+    private_ip: 10.0.0.21
+  tseng.qwazerty.eu:
+    node_type: compute
+    node_name: compute2
+    private_ip: 10.0.0.23
+  home.qwazerty.eu:
+    node_type: compute
+    node_name: compute3
+    private_ip: 10.0.0.25
+
+# CHANGE ME
+admin_token: ADMIN_TOKEN
+mysql_root_pass: MYSQL_ROOT_PASS
+rabbit_pass: RABBIT_PASS
+keystone_dbpass: KEYSTONE_DBPASS
+glance_dbpass: GLANCE_DBPASS
+glance_pass: GLANCE_PASS
+neutron_dbpass: NEUTRON_DBPASS
+neutron_pass: NEUTRON_PASS
+nova_dbpass: NOVA_DBPASS
+nova_pass: NOVA_PASS
+admin_pass: ADMIN_PASS
+demo_pass: DEMO_PASS
+metadata_secret: METADATA_SECRET

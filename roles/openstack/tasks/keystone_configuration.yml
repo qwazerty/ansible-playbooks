@@ -1,0 +1,127 @@
+---
+# mariadb
+
+- template: >
+    src=controller/mariadb_openstack.conf.j2
+    dest=/etc/my.cnf.d/mariadb_openstack.cnf
+
+- service: name=mariadb state=started enabled=yes
+
+# mysql_secure_installation
+
+- name: Deletes anonymous MySQL server user for localhost
+  mysql_user: user="" host={{ item }} state=absent
+  with_items:
+  - "{{ ansible_fqdn }}"
+  - localhost
+
+- name: Removes the MySQL test database
+  mysql_db: db=test state=absent
+
+- name: Secures the MySQL root user
+  mysql_user: user=root password={{ mysql_root_pass }} host={{ item }}
+  with_items:
+  - "{{ openstack_nodes[inventory_hostname].node_name }}"
+  - "{{ ansible_fqdn }}"
+  - 127.0.0.1
+  - ::1
+  - localhost
+
+- template: >
+    src=controller/my.cnf.j2
+    dest=/root/.my.cnf
+
+# rabbitmq
+
+- service: name=rabbitmq-server state=started enabled=yes
+
+- rabbitmq_user: user=openstack password={{ rabbit_pass }}
+    vhost=/ configure_priv=".*" read_priv=".*" write_priv=".*"
+    state=present
+
+# keystone
+
+- mysql_db: name=keystone state=present
+
+- mysql_user: name=keystone password={{ keystone_dbpass }} host={{ item }}
+    priv=keystone.*:ALL state=present
+  with_items:
+  - localhost
+  - "{{ openstack_nodes[inventory_hostname].node_name }}"
+
+- service: name=memcached state=started enabled=yes
+
+- template: >
+    src=keystone/keystone.conf.j2
+    dest=/etc/keystone/keystone.conf
+
+#- keystone_manage: action=db_sync
+#  become: yes
+#  become_user: keystone
+- command: keystone-manage db_sync
+  become: yes
+  become_user: keystone
+  changed_when: False
+
+# httpd
+
+- template: >
+    src=controller/httpd.conf.j2
+    dest=/etc/httpd/conf/httpd.conf
+
+- template: >
+    src=controller/wsgi-keystone.conf.j2
+    dest=/etc/httpd/conf.d/wsgi-keystone.conf
+
+- file: dest=/var/www/cgi-bin/keystone state=directory
+    owner=keystone group=keystone mode=0755
+
+- copy: src=controller/wsgi-keystone/{{ item }}
+    dest=/var/www/cgi-bin/keystone/{{ item }}
+    owner=keystone group=keystone mode=0755
+  with_items:
+  - main
+  - admin
+
+- seboolean: name=httpd_use_openstack state=yes persistent=yes
+- seboolean: name=httpd_can_network_connect_db state=yes persistent=yes
+
+- service: name=httpd state=started enabled=yes
+
+# Create the service entity and API endpoint
+
+- keystone_service: name=keystone type=identity description="Identity Service"
+    public_url="http://controller:5000/v2.0"
+    internal_url="http://controller:5000/v2.0"
+    admin_url="http://controller:35357/v2.0"
+    token={{ admin_token }}
+
+# Create admin tenant
+
+- keystone_user: tenant=admin tenant_description="Admin Project"
+    token={{ admin_token }}
+
+- keystone_user: user=admin tenant=admin
+    password={{ admin_pass }}
+    token={{ admin_token }}
+
+- keystone_user: role=admin user=admin tenant=admin
+    token={{ admin_token }}
+
+# Create service tenant
+
+- keystone_user: tenant=service tenant_description="Service Project"
+    token={{ admin_token }}
+
+- keystone_user: tenant=default tenant_description="Default Project"
+    token={{ admin_token }}
+
+- keystone_user: user=demo tenant=default
+    password={{ demo_pass }}
+    token={{ admin_token }}
+
+- keystone_user: role=user user=demo tenant=default
+    token={{ admin_token }}
+
+# FIXME: Disable admin_token_auth in keystone
+# http://docs.openstack.org/kilo/install-guide/install/yum/content/keystone-verify.html

@@ -1,0 +1,3 @@
+---
+- package: name={{ openstack_package_url }}
+    state=present

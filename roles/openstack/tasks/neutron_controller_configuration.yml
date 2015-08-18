@@ -1,0 +1,52 @@
+---
+# neutron
+
+- mysql_db: name=neutron state=present
+
+- mysql_user: name=neutron password={{ neutron_dbpass }} host={{ item }}
+    priv=neutron.*:ALL state=present
+  with_items:
+  - localhost
+  - "{{ openstack_nodes[inventory_hostname].node_name }}"
+
+- keystone_user: user=neutron tenant=service
+    password={{ neutron_pass }}
+    token={{ admin_token }}
+
+- keystone_user: role=admin user=neutron tenant=service
+    token={{ admin_token }}
+
+- keystone_service: name=neutron type=network description="Network Service"
+    public_url="http://controller:9696"
+    internal_url="http://controller:9696"
+    admin_url="http://controller:9696"
+    region={{ openstack_region }}
+    token={{ admin_token }}
+
+- template: >
+    src=controller/neutron.conf.j2
+    dest=/etc/neutron/neutron.conf
+  notify: Restart neutron
+
+- template: >
+    src=controller/ml2_conf.ini.j2
+    dest=/etc/neutron/plugins/ml2/ml2_conf.ini
+  notify: Restart neutron
+
+- template: >
+    src=controller/nova.conf.j2
+    dest=/etc/nova/nova.conf
+  notify: Restart nova
+
+- file: src=/etc/neutron/plugins/ml2/ml2_conf.ini
+    dest=/etc/neutron/plugin.ini state=link
+
+#- seboolean: name=glance_api_can_network state=yes persistent=yes
+
+- command: neutron-db-manage --config-file /etc/neutron/neutron.conf \
+    --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
+  become: yes
+  become_user: neutron
+  changed_when: False
+
+- service: name=neutron-server state=started enabled=yes

@@ -1,0 +1,38 @@
+#!/bin/sh
+# Script written by Julien Bonachera
+
+_mip_parseipr2() {
+    if [ -n "$1" ]; then
+        awk_pre_gsub="gsub(\"$1\",\"[$1]\");"
+    fi
+    awk "{ $awk_pre_gsub gsub(\"/\",\" /\"); print \$2\":\t\"\$4\" \"\$5}"
+}
+
+_mip_common() {
+    if [ -n "$2" ]; then
+        ip -f $inetfamily -o a s dev $2 | _mip_parseipr2 | column -t | awk '{print "\t"$0}'
+    else
+        default_iface=$(awk '{ if ($2 == '00000000') {print $1}}' /proc/net/route | head -n 1)
+        inetfamily="$1"
+        netns_list=$(ip -o netns list 2>/dev/null)
+        if [ -n "$netns_list" ]; then
+            for netns in $netns_list; do
+                echo "NS: $netns"
+                if [ "$UID" != "0" ]; then
+                    echo -e "\t(Reading NS informations requires root access)"
+                else
+                    ip netns exec $netns ip -f $inetfamily -o a| _mip_parseipr2 | column -t | awk '{print "\t"$0}'
+                    echo
+                fi
+            done
+        fi
+        echo "NS: Current"
+        ip -f $inetfamily -o a| _mip_parseipr2 $default_iface| column -t | awk '{print "\t"$0}'
+    fi
+}
+mip6() {
+    _mip_common inet6 $@
+}
+mip() {
+    _mip_common inet $@
+}

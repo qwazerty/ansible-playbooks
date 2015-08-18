@@ -1,0 +1,6 @@
+---
+- hosts: openstack
+  tasks:
+
+  - name: "Restart OpenStack services"
+    command: openstack-service restart

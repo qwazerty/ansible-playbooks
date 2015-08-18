@@ -1,0 +1,5 @@
+- name: dedicated
+  hosts: dedicated
+
+  roles:
+  - base

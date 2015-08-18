@@ -1,0 +1,22 @@
+---
+- file: dest=/etc/openvpn/keys state=directory owner=root group=root mode=0700
+
+- synchronize: >
+    src=/etc/openvpn/easy-rsa/keys/{{ inventory_hostname }}.key
+    dest=/etc/openvpn/keys/{{ inventory_hostname }}.key
+  delegate_to: "{{ openvpn_server }}"
+
+- synchronize: >
+    src=/etc/openvpn/easy-rsa/keys/{{ inventory_hostname }}.crt
+    dest=/etc/openvpn/keys/{{ inventory_hostname }}.crt
+  delegate_to: "{{ openvpn_server }}"
+
+- synchronize: >
+    src=/etc/openvpn/easy-rsa/keys/ca.crt
+    dest=/etc/openvpn/keys/ca.crt
+  delegate_to: "{{ openvpn_server }}"
+
+- synchronize: >
+    src=/etc/openvpn/easy-rsa/keys/ta.key
+    dest=/etc/openvpn/keys/ta.key
+  delegate_to: "{{ openvpn_server }}"

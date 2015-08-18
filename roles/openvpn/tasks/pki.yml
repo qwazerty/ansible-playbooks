@@ -1,0 +1,29 @@
+---
+- file: path=/etc/openvpn/easy-rsa state=directory owner=root group=root mode=0700
+
+- shell: cp -r /usr/share/easy-rsa/2.0/* /etc/openvpn/easy-rsa/
+  args:
+    creates: /etc/openvpn/easy-rsa/vars
+
+- template: src=vars.j2 dest=/etc/openvpn/easy-rsa/vars
+  register: setup_openvpn
+
+- shell: "{{ item }}"
+  args:
+    chdir: /etc/openvpn/easy-rsa
+  with_items:
+  - source ./vars && ./clean-all
+  - source ./vars && ./build-dh
+  - source ./vars && ./pkitool --initca
+  - source ./vars && ./pkitool --server "{{ openvpn_server }}"
+  - openvpn --genkey --secret keys/ta.key
+  when: setup_openvpn.changed
+
+- file: src=/etc/openvpn/easy-rsa/keys path=/etc/openvpn/keys
+    state=link
+
+- shell: "source ./vars && ./pkitool {{ item.key }}"
+  args:
+    chdir: /etc/openvpn/easy-rsa
+    creates: "/etc/openvpn/easy-rsa/keys/{{ item.key }}.key"
+  with_dict: openvpn_clients

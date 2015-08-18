@@ -1,0 +1,14 @@
+---
+- include: package.yml
+  tags: package
+
+- include: pki.yml
+  when: inventory_hostname == "{{ openvpn_server }}"
+  tags: configuration
+
+- include: sync_pki.yml
+  when: inventory_hostname != "{{ openvpn_server }}"
+  tags: configuration
+
+- include: openvpn_conf.yml
+  tags: configuration

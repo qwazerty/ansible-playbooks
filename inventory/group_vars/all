@@ -1,0 +1,6 @@
+redhat_packages: ['vim-enhanced', 'zsh', 'whois', 'screen', 'tmux', 'htop', 'iotop', 'tree', 'openssh',
+'libselinux-python', 'policycoreutils-python', 'setroubleshoot-server', 'bind-utils', 'nc',
+'patch', 'rsync', 'strace', 'traceroute', 'telnet']
+debian_packages: ['vim', 'zsh', 'whois', 'screen', 'tmux', 'htop', 'iotop', 'tree', 'openssh-client',
+  'dnsutils', 'netcat-openbsd', 'patch', 'rsync', 'strace', 'traceroute', 'telnet']
+ssh_passwordauth: "no"

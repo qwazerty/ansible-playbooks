@@ -1,0 +1,93 @@
+---
+# Setup
+
+- include: setup_package.yml
+  tags:
+    - setup
+    - setup-package
+- include: setup_configuration.yml
+  tags:
+    - setup
+    - setup-configuration
+
+# Keystone
+
+- include: keystone_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - keystone
+    - keystone-package
+- include: keystone_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - keystone
+    - keystone-configuration
+
+# Glance
+
+- include: glance_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - glance
+    - glance-package
+- include: glance_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - glance
+    - glance-configuration
+
+# Nova
+
+- include: nova_controller_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - nova
+    - nova-package
+- include: nova_controller_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - nova
+    - nova-configuration
+- include: nova_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'compute' }}"
+  tags:
+    - nova
+    - nova-package
+- include: nova_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'compute' }}"
+  tags:
+    - nova
+    - nova-configuration
+
+# Neutron
+
+- include: neutron_controller_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - neutron
+    - neutron-package
+- include: neutron_controller_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - neutron
+    - neutron-configuration
+- include: neutron_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'network' }}"
+  tags:
+    - neutron
+    - neutron-package
+- include: neutron_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'network' }}"
+  tags:
+    - neutron
+    - neutron-configuration
+- include: neutron_compute_package.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'compute' }}"
+  tags:
+    - neutron
+    - neutron-package
+- include: neutron_compute_configuration.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'compute' }}"
+  tags:
+    - neutron
+    - neutron-configuration

@@ -1,0 +1,4 @@
+---
+- include: playbooks/update.yml
+- include: playbooks/groups/dedicated.yml
+- include: playbooks/groups/openstack.yml
