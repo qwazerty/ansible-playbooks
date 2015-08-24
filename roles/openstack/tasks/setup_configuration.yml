@@ -1,6 +1,4 @@
 ---
-- debug: var=openstack_nodes
-
 - lineinfile: dest=/etc/hosts
     regexp='\s{{ item.value.node_name }}\s'
     line="{{ item.value.private_ip }} {{ item.value.node_name }}"

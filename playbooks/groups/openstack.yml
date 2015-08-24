@@ -1,5 +1,7 @@
 - name: openstack
   hosts: openstack
+  vars_files:
+    - vars/openstack.yml
   roles:
     - base
     - fix_ovh
