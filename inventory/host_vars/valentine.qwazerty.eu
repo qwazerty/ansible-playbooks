@@ -1,0 +1,6 @@
+postfix_myhostname: qwazerty.eu
+postfix_inet_interfaces: all
+
+postfix_aliases:
+  root: qwazerty
+  qwazerty: kevin.houdebert@gmail.com

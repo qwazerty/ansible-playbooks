@@ -1,3 +1,6 @@
 ---
-- package: name={{ openstack_package_url }}
+- package: name={{ item }}
     state=present
+  with_items:
+  - "{{ openstack_package_url }}"
+  - openvswitch

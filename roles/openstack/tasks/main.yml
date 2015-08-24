@@ -91,3 +91,9 @@
   tags:
     - neutron
     - neutron-configuration
+- include: neutron_subnet.yml
+  when: "{{ openstack_nodes[inventory_hostname].node_type == 'controller' }}"
+  tags:
+    - neutron
+    - neutron-configuration
+    - neutron-subnet

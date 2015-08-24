@@ -17,6 +17,14 @@ openvpn_clients:
     openvpn_ip: 10.0.0.25
     openvpn_remote: 10.0.0.26
 
+openvpn_key_country: FR
+openvpn_key_province: Ile-de-France
+openvpn_key_city: Paris
+openvpn_key_org: Qwazerty
+openvpn_key_email: root@qwazerty.eu
+openvpn_key_ou: OpenStack
+openvpn_key_name: OpenStack
+
 openstack_nodes:
   reno.qwazerty.eu:
     node_type: network

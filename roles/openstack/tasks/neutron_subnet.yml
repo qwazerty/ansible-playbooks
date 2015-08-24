@@ -1,0 +1,69 @@
+---
+- neutron_network:
+    name=public
+    provider_physical_network=external
+    provider_network_type=flat
+    router_external=yes
+    login_username=admin
+    login_password={{ admin_pass }}
+    login_tenant_name=admin
+    tenant_name=admin
+    state=present
+
+- neutron_subnet:
+    name=public-subnet
+    network_name=public
+    cidr=37.187.124.162/24
+    enable_dhcp=false
+    gateway_ip=37.187.124.162
+    login_username=admin
+    login_password={{ admin_pass }}
+    login_tenant_name=admin
+    tenant_name=admin
+    state=present
+
+- neutron_network:
+    name=private
+    login_username=admin
+    login_password={{ admin_pass }}
+    login_tenant_name=admin
+    tenant_name=default
+    state=present
+
+- neutron_subnet:
+    name=private-subnet
+    network_name=private
+    cidr=192.168.0.0/24
+    gateway_ip=192.168.0.1
+    login_username=admin
+    login_password={{ admin_pass }}
+    login_tenant_name=admin
+    tenant_name=default
+    state=present
+
+- neutron_router:
+    name=default-router
+    login_username=admin
+    login_password={{ admin_pass }}
+    login_tenant_name=admin
+    state=present
+
+#- neutron_router_interface:
+#    router_name=default_router
+#    subnet_name=private_subnet
+#    login_username=admin
+#    login_password={{ admin_pass }}
+#    login_tenant_name=admin
+#    state=present
+
+- shell: source ~/.zsh/admin-openrc; neutron router-interface-add default-router private-subnet
+
+- shell: source ~/.zsh/admin-openrc; neutron router-gateway-set default-router public
+
+#- neutron_router_gateway:
+#    router_name=default_router
+#    network_name=public
+#    login_username=admin
+#    login_password={{ admin_pass }}
+#    login_tenant_name=admin
+#    state=present

@@ -61,15 +61,15 @@ export KEY_EXPIRE=3650
 # These are the default values for fields
 # which will be placed in the certificate.
 # Don't leave any of these fields blank.
-export KEY_COUNTRY="FR"
-export KEY_PROVINCE="Ile-de-France"
-export KEY_CITY="Paris"
-export KEY_ORG="Qwazerty"
-export KEY_EMAIL="root@qwazerty.eu"
-export KEY_OU="OpenStack"
+export KEY_COUNTRY="{{ openvpn_key_country }}"
+export KEY_PROVINCE="{{ openvpn_key_province }}"
+export KEY_CITY="{{ openvpn_key_city }}"
+export KEY_ORG="{{ openvpn_key_org }}"
+export KEY_EMAIL="{{ openvpn_key_email }}"
+export KEY_OU="{{ openvpn_key_ou }}"
 
 # X509 Subject Field
-export KEY_NAME="OpenStack"
+export KEY_NAME="{{ openvpn_key_name }}"
 
 # PKCS11 Smart Card
 # export PKCS11_MODULE_PATH="/usr/lib/changeme.so"

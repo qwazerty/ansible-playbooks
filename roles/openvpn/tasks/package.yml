@@ -10,5 +10,4 @@
   with_items:
   - openvpn
   - easy-rsa
-  - openvswitch
   when: ansible_os_family == "RedHat"
