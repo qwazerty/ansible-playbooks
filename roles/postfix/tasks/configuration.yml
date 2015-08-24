@@ -1,0 +1,19 @@
+---
+- lineinfile: dest=/etc/postfix/main.cf
+    regexp="^myhostname"
+    line="myhostname = {{ postfix_myhostname }}"
+  notify: Restart postfix
+
+- lineinfile: dest=/etc/postfix/main.cf
+    regexp='^inet_interfaces'
+    line='inet_interfaces = {{ postfix_inet_interfaces }}'
+  notify: Restart postfix
+
+- lineinfile: dest=/etc/aliases
+  args:
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }}: {{ item.value }}"
+  with_dict: postfix_aliases
+  notify: Restart postfix
+
+- service: name=postfix state=started enabled=yes
