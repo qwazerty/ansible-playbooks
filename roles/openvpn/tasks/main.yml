@@ -10,5 +10,5 @@
   when: inventory_hostname != "{{ openvpn_server }}"
   tags: configuration
 
-- include: openvpn_conf.yml
+- include: configuration.yml
   tags: configuration
