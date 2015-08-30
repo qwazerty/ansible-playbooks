@@ -11,8 +11,5 @@
 - name: "set shell to zsh for root"
   user: name=root shell=/usr/bin/zsh
 
-- name: "ssh folder for root"
-  file: path=/root/.ssh/ owner=root group=root mode=0700
-
 - name: "ssh keys for root"
-  copy: src=authorized_keys dest=/root/.ssh/authorized_keys owner=root group=root mode=0600
+  authorized_key: key={{ authorized_keys }} user=root exclusive={{ authorized_keys_exclusive }}

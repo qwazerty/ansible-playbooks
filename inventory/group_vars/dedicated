@@ -1,4 +1,5 @@
-ssh_passwordauth: "yes"
+ssh_passwordauth: yes
+user: qwazerty
 
 openvpn_server: valentine.qwazerty.eu
 openvpn_clients:

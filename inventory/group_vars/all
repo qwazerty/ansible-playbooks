@@ -3,4 +3,7 @@ redhat_packages: ['vim-enhanced', 'zsh', 'whois', 'screen', 'tmux', 'htop', 'iot
 'patch', 'rsync', 'strace', 'traceroute', 'telnet']
 debian_packages: ['vim', 'zsh', 'whois', 'screen', 'tmux', 'htop', 'iotop', 'tree', 'openssh-client',
   'dnsutils', 'netcat-openbsd', 'patch', 'rsync', 'strace', 'traceroute', 'telnet']
-ssh_passwordauth: "no"
+
+ssh_passwordauth: no
+authorized_keys: 'https://github.com/qwazerty.keys'
+authorized_keys_exclusive: yes
