@@ -7,12 +7,10 @@ BRIDGE=br-ex
 INTERFACE=eth0
 HOST_IP={{ ansible_default_ipv4.address }}
 HOST_GATEWAY={{ ansible_default_ipv4.gateway }}
-HOST_MAC={{ ansible_default_ipv4.macaddress }}
 
 if ! ovs-vsctl br-exists $BRIDGE; then
   echo "Begin network configuration"
   ovs-vsctl add-br $BRIDGE
-  ifconfig $BRIDGE hw ether $HOST_MAC
   ifconfig $INTERFACE promisc up
   ovs-vsctl add-port $BRIDGE $INTERFACE
 
