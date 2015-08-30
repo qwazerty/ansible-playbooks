@@ -1,0 +1,14 @@
+---
+- name: Install debian packages
+  package: name={{ item }} state=latest
+  with_items:
+      - pass
+      - git
+  when: ansible_os_family == "Debian"
+
+- name: Install redhat packages
+  package: name={{ item }} state=latest
+  with_items:
+      - pass
+      - git
+  when: ansible_os_family == "RedHat"
