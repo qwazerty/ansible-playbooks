@@ -1,0 +1,8 @@
+---
+- template: >
+    src=nginx.conf.j2
+    dest=/etc/nginx/conf.d/{{ item.key }}.conf
+  with_dict: nginx
+  notify: Restart nginx
+
+- service: name=nginx state=started enabled=yes
