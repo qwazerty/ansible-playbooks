@@ -4,5 +4,7 @@
   roles:
   - base
   - user
+  - nginx
   - openvpn
   - postfix
+  - transmission
