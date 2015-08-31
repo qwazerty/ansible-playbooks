@@ -1,0 +1,27 @@
+---
+- file: dest=/var/lib/transmission/.config/transmission-daemon/settings.json
+    state=file
+  register: transmission_config
+
+- service: name=transmission-daemon state=started enabled=yes
+  when: transmission_config.changed
+
+- lineinfile: >
+    dest=/var/lib/transmission/.config/transmission-daemon/settings.json
+    regexp='rpc-bind-address'
+    line='    "rpc-bind-address": "127.0.0.1", '
+    owner=transmission group=transmission mode=0600
+  register: transmission_bind
+
+- service: name=transmission-daemon state=stopped
+  when: transmission_bind.changed
+
+- name: check transmission config
+  lineinfile: >
+    dest=/var/lib/transmission/.config/transmission-daemon/settings.json
+    regexp='rpc-bind-address'
+    line='    "rpc-bind-address": "127.0.0.1 ", '
+    owner=transmission group=transmission mode=0600
+  when: transmission_bind.changed
+
+- service: name=transmission-daemon state=started enabled=yes
