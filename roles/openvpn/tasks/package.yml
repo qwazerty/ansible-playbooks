@@ -1,6 +1,6 @@
 ---
 #- name: Install debian packages
-#  package: name={{ item }} state=latest
+#  package: name={{ item }} state=present
 #  with_items:
 #      - "{{ debian_packages }}"
 #  when: ansible_os_family == "Debian"
