@@ -1,0 +1,28 @@
+server
+{
+    server_name {{ item.value.server_name }};
+    listen {{ item.value.listen }};
+
+    location /
+    {
+{% if item.value.proxy_pass is defined %}
+        proxy_pass {{ item.value.proxy_pass }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+{% endif %}
+{% if item.value.auth is defined %}
+        satisfy {{ item.value.auth.satisfy }};
+{% if item.value.auth['ip'] is defined %}
+{% for ip in nginx_ip_allow %}
+        allow {{ ip }};
+{% endfor %}
+        deny all;
+{% endif %}
+{% if item.value.auth['auth'] is defined %}
+        auth_basic "Private zone";
+        auth_basic_user_file /etc/nginx/conf.d/reverse.htpasswd;
+{% endif %}
+{% endif %}
+    }
+}
