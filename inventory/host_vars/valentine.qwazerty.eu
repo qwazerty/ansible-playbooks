@@ -4,3 +4,40 @@ postfix_inet_interfaces: all
 postfix_aliases:
   root: qwazerty
   qwazerty: kevin.houdebert@gmail.com
+  wildcard: qwazerty
+
+nginx:
+  index:
+    server_name: qwazerty.eu
+    listen: 80
+    root: '/usr/share/nginx/html'
+  torrent:
+    server_name: torrent.qwazerty.eu
+    listen: 80
+    proxy_pass: 'http://localhost:9091'
+    auth:
+      satisfy: any
+      ip: true
+      auth: true
+
+nginx_ip_allow:
+- 81.56.110.168
+
+openvpn_server: valentine.qwazerty.eu
+openvpn_clients:
+  kisaragi.qwazerty.eu:
+    openvpn_ip: 10.0.0.5
+    openvpn_remote: 10.0.0.6
+  fair.qwazerty.eu:
+    openvpn_ip: 10.0.0.13
+    openvpn_remote: 10.0.0.14
+
+openvpn_key_country: FR
+openvpn_key_province: Ile-de-France
+openvpn_key_city: Paris
+openvpn_key_org: Qwazerty
+openvpn_key_email: root@qwazerty.eu
+openvpn_key_ou: Dedicated
+openvpn_key_name: Valentine
+
+openvpn_redirect_gateway: true
