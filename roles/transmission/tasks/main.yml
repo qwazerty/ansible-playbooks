@@ -1,0 +1,8 @@
+---
+- name: transmission package
+  include: package.yml
+  tags: package
+
+- name: transmission configuration
+  include: configuration.yml
+  tags: configuration
