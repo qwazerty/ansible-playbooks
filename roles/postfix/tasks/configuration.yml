@@ -1,13 +1,13 @@
 ---
 - lineinfile: dest=/etc/postfix/main.cf
-    regexp="{{ item.key }}"
-    line="{{ item.value }}"
-  with_dict:
-  - "{ key: '^myhostname', value: 'myhostname = {{ postfix_myhostname }}' }"
-  - "{ key: '^inet_interfaces', value: 'inet_interfaces = {{ postfix_inet_interfaces }}' }"
-  - "{ key: '^smtpd_milters', value: 'smtpd_milters = inet:127.0.0.1:8891' }"
-  - "{ key: '^non_smtpd_milters', value: 'non_smtpd_milters = $smtpd_milters' }"
-  - "{ key: '^milter_default_action', value: 'milter_default_action = accept' }"
+    regexp="^{{ item.key }}"
+    line="{{ item.key }} = {{ item.value }}"
+  with_items:
+  - { key: 'myhostname', value: '{{ postfix_myhostname }}' }
+  - { key: 'inet_interfaces', value: '{{ postfix_inet_interfaces }}' }
+  - { key: 'smtpd_milters', value: 'inet:127.0.0.1:8891' }
+  - { key: 'non_smtpd_milters', value: '$smtpd_milters' }
+  - { key: 'milter_default_action', value: 'accept' }
   notify: Restart postfix
 
 - lineinfile: dest=/etc/aliases
@@ -18,7 +18,7 @@
   notify: Restart postfix
 
 - command: opendkim-default-keygen
-    creates= /etc/opendkim/keys/default.private
+    creates=/etc/opendkim/keys/default.private
 
 - lineinfile: dest=/etc/opendkim.conf
     regexp='^Domain'
