@@ -6,13 +6,14 @@
   authorized_key: key={{ authorized_keys }} user={{ user }} exclusive={{ authorized_keys_exclusive }}
 
 - name: create directory for config
-  file: path=/home/{{ user }}/git state=directory owner={{ user }} group={{ user }}
+  file: path=/home/{{ user }}/git/config state=directory owner={{ user }} group={{ user }}
+  register: create_configuration
 
 - name: clone configuration
   git: repo=https://github.com/qwazerty/config.git dest=/home/{{ user }}/git/config
   become: yes
   become_user: "{{ user }}"
-  register: clone_configuration
+  when: create_configuration.changed
 
 - name: install configuration
   command: ./install.sh
@@ -20,4 +21,4 @@
     chdir: /home/{{ user }}/git/config
   become: yes
   become_user: "{{ user }}"
-  when: clone_configuration.changed
+  when: create_configuration.changed
