@@ -1,13 +1,13 @@
 ---
 - name: Install debian packages
-  package: name={{ item }} state=present
+  apt: name={{ item }} state=present
   with_items:
       - pass
       - git
   when: ansible_os_family == "Debian"
 
 - name: Install redhat packages
-  package: name={{ item }} state=present
+  dnf: name={{ item }} state=present
   with_items:
       - pass
       - git
