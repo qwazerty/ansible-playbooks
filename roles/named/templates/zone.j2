@@ -1,0 +1,28 @@
+$TTL 2h
+@   IN  SOA {{ item.value.soa_hosts }} (
+        {{ item.value.serial }} ;Serial
+        1h          ;Refresh
+        30m         ;Retry
+        2w          ;Expire
+        1h          ;Minimum TTL
+)
+{% for ns in item.value.ns %}
+                IN NS    {{ ns }}
+{% endfor %}
+{% for key, value in item.value.entries.iteritems() %}
+{% if value['A'] is defined %}
+{{ key }} IN A     {{ value['A'] }}
+{% endif %}
+{% if value['AAAA'] is defined %}
+{{ key}} IN AAAA  {{ value['AAAA'] }}
+{% endif %}
+{% if value['MX'] is defined %}
+{{ key }} IN MX 10 {{ value['MX'] }}
+{% endif %}
+{% if value['CNAME'] is defined %}
+{{ key }} IN CNAME {{ value['CNAME'] }}
+{% endif %}
+{% if value['TXT'] is defined %}
+{{ key }} IN TXT   {{ value['TXT'] }}
+{% endif %}
+{% endfor %}

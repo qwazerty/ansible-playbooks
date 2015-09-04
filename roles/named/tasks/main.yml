@@ -1,0 +1,9 @@
+---
+- name: named package
+  include: package.yml
+  tags: package
+
+- name: named configuration
+  include: configuration.yml
+  when: ansible_os_family == "RedHat"
+  tags: configuration
