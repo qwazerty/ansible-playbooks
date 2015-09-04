@@ -1,0 +1,13 @@
+---
+- template: >
+    src=named.conf.j2
+    dest=/etc/named.conf
+  notify: Restart named
+
+- template: >
+    src=zone.j2
+    dest=/var/named/{{ item.key }}.zone
+  with_dict: named
+  notify: Restart named
+
+- service: name=named state=started enabled=yes
