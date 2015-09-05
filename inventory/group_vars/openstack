@@ -7,10 +7,10 @@ openvpn_clients:
   rude.qwazerty.eu:
     openvpn_ip: 10.0.0.11
     openvpn_remote: 10.0.0.12
-  elena.qwazerty.eu:
+  tseng.qwazerty.eu:
     openvpn_ip: 10.0.0.21
     openvpn_remote: 10.0.0.22
-  tseng.qwazerty.eu:
+  elena.qwazerty.eu:
     openvpn_ip: 10.0.0.23
     openvpn_remote: 10.0.0.24
   home.qwazerty.eu:
@@ -34,11 +34,11 @@ openstack_nodes:
     node_type: controller
     node_name: controller
     private_ip: 10.0.0.11
-  elena.qwazerty.eu:
+  tseng.qwazerty.eu:
     node_type: compute
     node_name: compute1
     private_ip: 10.0.0.21
-  tseng.qwazerty.eu:
+  elena.qwazerty.eu:
     node_type: compute
     node_name: compute2
     private_ip: 10.0.0.23
