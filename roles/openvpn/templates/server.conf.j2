@@ -189,7 +189,7 @@ client-config-dir ccd
 # (The OpenVPN server machine may need to NAT
 # or bridge the TUN/TAP interface to the internet
 # in order for this to work properly).
-{% if openvpn_redirect_gateway == true %}
+{% if openvpn_redirect_gateway is defined and openvpn_redirect_gateway == true %}
 push "redirect-gateway def1 bypass-dhcp"
 {% else %}
 ;push "redirect-gateway def1 bypass-dhcp"
