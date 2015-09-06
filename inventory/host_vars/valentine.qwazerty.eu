@@ -25,7 +25,7 @@ nginx_ip_allow:
 
 named:
   qwazerty.eu:
-    serial: 2015030901
+    serial: 2015090601
     soa_hosts: ns1.qwazerty.eu. valentine.qwazerty.eu.
     ns:
     - ns1

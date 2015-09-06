@@ -5,6 +5,7 @@
   - base
   - user
   - nginx
+  - named
   - openvpn
   - postfix
   - transmission
