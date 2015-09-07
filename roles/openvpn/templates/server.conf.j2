@@ -50,7 +50,7 @@ proto udp
 # unless you partially or fully disable
 # the firewall for the TUN/TAP interface.
 ;dev tap
-dev tun
+dev {{ openvpn_dev }}
 
 # Windows needs the TAP-Win32 adapter name
 # from the Network Connections panel if you
@@ -269,7 +269,11 @@ comp-lzo
 # You can uncomment this out on
 # non-Windows systems.
 user nobody
+{% if ansible_os_family == 'Debian' %}
+group nogroup
+{% elif ansible_os_family == 'RedHat' %}
 group nobody
+{% endif %}
 
 # The persist options will try to avoid
 # accessing certain resources on restart

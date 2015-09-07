@@ -1,8 +1,12 @@
 ---
 - name: postfix package
   include: package.yml
-  tags: package
+  tags:
+  - package
+  - postfix-package
 
 - name: postfix configuration
   include: configuration.yml
-  tags: configuration
+  tags:
+  - configuration
+  - postfix-configuration

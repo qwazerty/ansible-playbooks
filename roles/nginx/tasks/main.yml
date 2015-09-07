@@ -1,8 +1,12 @@
 ---
 - name: nginx package
   include: package.yml
-  tags: package
+  tags:
+  - package
+  - nginx-package
 
 - name: nginx configuration
   include: configuration.yml
-  tags: configuration
+  tags:
+  - configuration
+  - nginx-configuration

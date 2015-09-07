@@ -2,6 +2,9 @@ server
 {
     server_name {{ item.value.server_name }};
     listen {{ item.value.listen }};
+{% if item.value.root is defined %}
+    root {{ item.value.root }};
+{% endif %}
 
     location /
     {

@@ -1,9 +1,20 @@
 ---
 - include: package.yml
-  tags: package
+  tags:
+  - package
+  - base-package
+
 - include: root.yml
-  tags: configuration
+  tags:
+  - configuration
+  - base-configuration
+
 - include: hosts.yml
-  tags: configuration
+  tags:
+  - configuration
+  - base-configuration
+
 - include: sshd.yml
-  tags: configuration
+  tags:
+  - configuration
+  - base-configuration

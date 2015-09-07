@@ -1,5 +1,12 @@
 ---
-- include: package.yml
-  tags: package
-- include: configuration.yml
-  tags: configuration
+- name: user package
+  include: package.yml
+  tags:
+  - package
+  - user-package
+
+- name: user configuration
+  include: configuration.yml
+  tags:
+  - configuration
+  - user-configuration

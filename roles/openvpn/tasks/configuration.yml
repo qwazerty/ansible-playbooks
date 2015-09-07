@@ -14,6 +14,11 @@
 
 - service: name=openvpn@server state=started enabled=yes
   when: inventory_hostname == "{{ openvpn_server }}"
+    and ansible_os_family == "RedHat"
 
 - service: name=openvpn@client state=started enabled=yes
   when: inventory_hostname != "{{ openvpn_server }}"
+    and ansible_os_family == "RedHat"
+
+- service: name=openvpn state=started enabled=yes
+  when: ansible_os_family == "Debian"

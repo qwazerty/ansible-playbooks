@@ -1,12 +1,13 @@
 ---
-#- name: Install debian packages
-#  apt: name={{ item }} state=present
-#  with_items:
-#      - FIXME
-#  when: ansible_os_family == "Debian"
+- name: Install debian packages
+  apt: name={{ item }} state=present
+  with_items:
+  - openvpn
+  - easy-rsa
+  when: ansible_os_family == "Debian"
 
 - name: Install redhat packages
-  dnf: name={{ item }} state=present
+  yum: name={{ item }} state=present
   with_items:
   - openvpn
   - easy-rsa

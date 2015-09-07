@@ -4,6 +4,12 @@
 - shell: cp -r /usr/share/easy-rsa/2.0/* /etc/openvpn/easy-rsa/
   args:
     creates: /etc/openvpn/easy-rsa/vars
+  when: ansible_os_family == "RedHat"
+
+- shell: cp -r /usr/share/easy-rsa/* /etc/openvpn/easy-rsa/
+  args:
+    creates: /etc/openvpn/easy-rsa/vars
+  when: ansible_os_family == "Debian"
 
 - template: src=vars.j2 dest=/etc/openvpn/easy-rsa/vars
   register: setup_openvpn
