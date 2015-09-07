@@ -11,6 +11,10 @@ nginx:
     server_name: qwazerty.eu
     listen: 80
     root: '/usr/share/nginx/html'
+  osad:
+    server_name: osad.qwazerty.eu
+    listen: 80
+    root: '/srv/www/osad'
   torrent:
     server_name: torrent.qwazerty.eu
     listen: 80
@@ -25,7 +29,7 @@ nginx_ip_allow:
 
 named:
   qwazerty.eu:
-    serial: 2015090601
+    serial: 2015090602
     soa_hosts: ns1.qwazerty.eu. valentine.qwazerty.eu.
     ns:
     - ns1
@@ -53,9 +57,12 @@ named:
         CNAME: valentine
       multipass:
         CNAME: valentine
+      osad:
+        CNAME: valentine
       default._domainkey:
         TXT: '( "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDjXfOHO56Q/w5DA0lmduJF2HBrqbYTIaqRn7a1Q6r8W0IlYcNK+OUp4YdK4mnLMcJ1n9io62oAXvMaMMUL/j52+whorNSwF2CIl0M2QVsuLjefx1x7A1DOp9m/O9dj55bfsSfSZnZm2gKF1enqETkNItOZVm0JT1cUrlYqBKmIJQIDAQAB" )  ; ----- DKIM key default for qwazerty.eu'
 
+openvpn_dev: tun
 openvpn_server: valentine.qwazerty.eu
 openvpn_clients:
   kisaragi.qwazerty.eu:

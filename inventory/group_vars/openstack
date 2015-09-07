@@ -2,6 +2,7 @@ openstack_region: RegionOne
 openstack_verbose: True
 openstack_debug: False
 
+openvpn_dev: tap
 openvpn_server: reno.qwazerty.eu
 openvpn_clients:
   rude.qwazerty.eu:
