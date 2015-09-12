@@ -14,6 +14,9 @@ server
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 {% endif %}
+{% if item.value.autoindex is defined %}
+        autoindex {{ item.value.autoindex }};
+{% endif %}
 {% if item.value.auth is defined %}
         satisfy {{ item.value.auth.satisfy }};
 {% if item.value.auth['ip'] is defined %}
@@ -24,7 +27,7 @@ server
 {% endif %}
 {% if item.value.auth['auth'] is defined %}
         auth_basic "Private zone";
-        auth_basic_user_file /etc/nginx/conf.d/reverse.htpasswd;
+        auth_basic_user_file /etc/nginx/conf.d/htpasswd;
 {% endif %}
 {% endif %}
     }

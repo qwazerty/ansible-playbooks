@@ -23,6 +23,15 @@ nginx:
       satisfy: any
       ip: true
       auth: true
+  multipass:
+    server_name: multipass.qwazerty.eu
+    listen: 80
+    root: '/var/lib/transmission/Downloads/'
+    autoindex: 'on'
+    auth:
+      satisfy: any
+      ip: true
+      auth: true
 
 nginx_ip_allow:
 - 81.56.110.168
