@@ -38,7 +38,7 @@ nginx_ip_allow:
 
 named:
   qwazerty.eu:
-    serial: 2015090602
+    serial: 2015091201
     soa_hosts: ns1.qwazerty.eu. valentine.qwazerty.eu.
     ns:
     - ns1
@@ -62,12 +62,16 @@ named:
         A: 37.187.124.66
       tseng:
         A: 151.80.46.142
+      host:
+        A: 188.165.205.192
       torrent:
         CNAME: valentine
       multipass:
         CNAME: valentine
       osad:
         CNAME: valentine
+      minecraft:
+        CNAME: host
       default._domainkey:
         TXT: '( "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDjXfOHO56Q/w5DA0lmduJF2HBrqbYTIaqRn7a1Q6r8W0IlYcNK+OUp4YdK4mnLMcJ1n9io62oAXvMaMMUL/j52+whorNSwF2CIl0M2QVsuLjefx1x7A1DOp9m/O9dj55bfsSfSZnZm2gKF1enqETkNItOZVm0JT1cUrlYqBKmIJQIDAQAB" )  ; ----- DKIM key default for qwazerty.eu'
 
