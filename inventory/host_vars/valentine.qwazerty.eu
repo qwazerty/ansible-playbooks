@@ -38,7 +38,7 @@ nginx_ip_allow:
 
 named:
   qwazerty.eu:
-    serial: 2015091202
+    serial: 2015092202
     soa_hosts: ns1.qwazerty.eu. valentine.qwazerty.eu.
     ns:
     - ns1
@@ -62,6 +62,8 @@ named:
         A: 37.187.124.66
       tseng:
         A: 151.80.46.142
+      elena:
+        A: 195.154.173.66
       host:
         A: 188.165.205.192
       torrent:
@@ -71,9 +73,9 @@ named:
       osad:
         CNAME: valentine
       ts:
-        CNAME: host
+        CNAME: elena
       minecraft:
-        CNAME: host
+        CNAME: elena
       default._domainkey:
         TXT: '( "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDjXfOHO56Q/w5DA0lmduJF2HBrqbYTIaqRn7a1Q6r8W0IlYcNK+OUp4YdK4mnLMcJ1n9io62oAXvMaMMUL/j52+whorNSwF2CIl0M2QVsuLjefx1x7A1DOp9m/O9dj55bfsSfSZnZm2gKF1enqETkNItOZVm0JT1cUrlYqBKmIJQIDAQAB" )  ; ----- DKIM key default for qwazerty.eu'
 
@@ -86,6 +88,9 @@ openvpn_clients:
   fair.qwazerty.eu:
     openvpn_ip: 10.0.0.13
     openvpn_remote: 10.0.0.14
+  karka:
+    openvpn_ip: 10.0.0.15
+    openvpn_remote: 10.0.0.16
 
 openvpn_key_country: FR
 openvpn_key_province: Ile-de-France
@@ -96,3 +101,8 @@ openvpn_key_ou: Dedicated
 openvpn_key_name: Valentine
 
 openvpn_redirect_gateway: true
+openvpn_port: 443
+openvpn_proto: tcp
+openvpn_dns:
+- 8.8.8.8
+- 8.8.4.4
