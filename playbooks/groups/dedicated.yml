@@ -1,6 +1,5 @@
-- name: dedicated
-  hosts: dedicated
-
+- name: valentine
+  hosts: valentine.qwazerty.eu
   roles:
   - base
   - user
@@ -9,3 +8,9 @@
   - openvpn
   - postfix
   - transmission
+
+- name: elena
+  hosts: elena.qwazerty.eu
+  roles:
+  - base
+  - user
