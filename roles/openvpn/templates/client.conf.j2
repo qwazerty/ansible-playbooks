@@ -34,12 +34,12 @@ dev {{ openvpn_dev }}
 # UDP server?  Use the same setting as
 # on the server.
 ;proto tcp
-proto udp
+proto {{ openvpn_proto }}
 
 # The hostname/IP and port of the server.
 # You can have multiple remote entries
 # to load balance between the servers.
-remote {{ openvpn_server }} 1194
+remote {{ openvpn_server }} {{ openvpn_port }}
 ;remote my-server-2 1194
 
 # Choose a random host from the remote
