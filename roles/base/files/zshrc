@@ -163,6 +163,9 @@ unsetopt extendedglob
 # Ignore duplicate in history
 setopt histignoredups
 
+# Set sh-like word split
+setopt shwordsplit
+
 zstyle ':completion:*' verbose true
 zstyle ':completion:*' menu select=1
 zstyle ':vcs_info:*' enable git svn
