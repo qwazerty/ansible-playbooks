@@ -1,0 +1,8 @@
+redhat_packages: ['vim-enhanced', 'zsh', 'screen', 'tmux', 'htop', 'iotop', 'tree', 'openssh',
+'libselinux-python', 'policycoreutils-python', 'bind-utils', 'nc', 'patch', 'rsync',
+'rxvt-unicode', 'strace', 'tar', 'tcpdump', 'traceroute', 'telnet']
+debian_packages: ['vim', 'zsh', 'screen', 'tmux', 'htop', 'iotop', 'tree', 'openssh-client',
+  'dnsutils', 'netcat-openbsd', 'patch', 'rsync', 'strace', 'tcpdump', 'traceroute', 'telnet']
+archlinux_packages: ['vim', 'zsh', 'screen', 'tmux', 'htop', 'iotop', 'tree', 'openssh', 'git',
+'bind-tools', 'openbsd-netcat', 'patch', 'rsync', 'rxvt-unicode-terminfo', 'strace', 'sudo',
+'tcpdump', 'traceroute']

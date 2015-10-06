@@ -16,3 +16,9 @@
   with_items:
       - "{{ redhat_packages }}"
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 22
+
+- name: Install archlinux packages
+  pacman: name={{ item }} state=present
+  with_items:
+      - "{{ archlinux_packages }}"
+  when: ansible_os_family == "Archlinux"
