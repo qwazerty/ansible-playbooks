@@ -1,3 +1,5 @@
+ssh_passwordauth: 'yes'
+
 postfix_myhostname: qwazerty.eu
 postfix_inet_interfaces: all
 

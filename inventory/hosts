@@ -6,4 +6,4 @@ tseng.qwazerty.eu
 
 [dedicated]
 valentine.qwazerty.eu
-elena.qwazerty.eu
+elena.qwazerty.eu ansible_python_interpreter=python2
