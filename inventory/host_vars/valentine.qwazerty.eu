@@ -38,7 +38,7 @@ nginx_ip_allow:
 
 named:
   qwazerty.eu:
-    serial: 2015092202
+    serial: 2015092203
     soa_hosts: ns1.qwazerty.eu. valentine.qwazerty.eu.
     ns:
     - ns1
@@ -72,6 +72,8 @@ named:
         CNAME: valentine
       osad:
         CNAME: valentine
+      horizon:
+        CNAME: elena
       ts:
         CNAME: elena
       minecraft:
