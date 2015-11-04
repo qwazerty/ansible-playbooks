@@ -1,4 +1,10 @@
 ---
+- name: Set ssl configuration
+  template: >
+    src=ssl.conf.j2
+    dest=/etc/nginx/conf.d/ssl.conf
+  notify: Restart nginx
+
 - template: >
     src=nginx.conf.j2
     dest=/etc/nginx/conf.d/{{ item.key }}.conf
