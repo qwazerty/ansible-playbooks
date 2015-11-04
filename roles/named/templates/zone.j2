@@ -25,4 +25,7 @@ $TTL 2h
 {% if value['TXT'] is defined %}
 {{ key }} IN TXT   {{ value['TXT'] }}
 {% endif %}
+{% if value['NS'] is defined %}
+{{ key }} IN NS   {{ value['NS'] }}
+{% endif %}
 {% endfor %}
